@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, make_response
 from database.db import initialize_db
-from database.models import Driver, Battery
+from database.models import Driver, Battery, Station
 
 
 app = Flask(__name__)
@@ -40,6 +40,19 @@ def create_battery():
 def get_batteries():
     batteries = Battery.objects().to_json()
     return make_response(batteries), 200
+
+
+@app.route("/station", methods=["POST"])
+def create_station():
+    station = request.get_json()
+    Station(location=station["location"]).save()
+    return make_response(jsonify(station)), 201
+
+
+@app.route("/stations", methods=["GET"])
+def get_stations():
+    stations = Station.objects().to_json()
+    return make_response(stations), 200
 
 
 if __name__ == '__main__':
