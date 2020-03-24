@@ -13,3 +13,8 @@ class Battery(db.Document):
     voltage = db.FloatField(required=True)
     capacity = db.IntField(required=True)
     date_modified = db.DateTimeField(default=datetime.datetime.utcnow)
+
+
+class Station(db.Document):
+    location = db.StringField(required=True)
+    date_modified = db.DateTimeField(default=datetime.datetime.utcnow)
