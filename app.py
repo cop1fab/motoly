@@ -1,6 +1,7 @@
+import json
 from flask import Flask, jsonify, request, make_response
 from database.db import initialize_db
-from database.models import Driver, Battery, Station
+from database.models import Driver, Battery, Station, Vehicle
 
 
 app = Flask(__name__)
@@ -16,17 +17,23 @@ def home():
     return "Welcome to motoly, your #1 app to manage electric vehicle business in Rwanda"
 
 
-@app.route("/driver", methods=["POST"])
-def create_driver():
+@app.route("/driver/<vehicle_id>", methods=["POST"])
+def create_driver(vehicle_id):
     driver = request.get_json()
-    Driver(name=driver["name"]).save()
-    return make_response(jsonify(driver)), 201
+    new_driver = Driver(name=driver["name"], vehicle=vehicle_id).save()
+    return make_response(jsonify({"driver": json.loads(new_driver.to_json())})), 201
 
 
 @app.route("/drivers", methods=["GET"])
 def get_drivers():
     drivers = Driver.objects().to_json()
     return make_response(drivers), 200
+
+
+@app.route("/driver/driver_id", methods=["GET"])
+def get_one_drivers():
+    one_driver = Driver.objects().to_json()
+    return make_response(one_driver), 200
 
 
 @app.route("/battery", methods=["POST"])
@@ -53,6 +60,13 @@ def create_station():
 def get_stations():
     stations = Station.objects().to_json()
     return make_response(stations), 200
+
+
+@app.route("/vehicle", methods=["POST"])
+def create_vehicle():
+    vehicle = Vehicle().save()
+    return make_response(jsonify({"message": "successfully created vehicle",
+                                  "vehicle": json.loads(vehicle.to_json())})), 201
 
 
 if __name__ == '__main__':
