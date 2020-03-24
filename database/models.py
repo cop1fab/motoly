@@ -8,3 +8,8 @@ class Driver(db.Document):
     name = db.StringField(required=True)
     date_modified = db.DateTimeField(default=datetime.datetime.utcnow)
 
+
+class Battery(db.Document):
+    voltage = db.FloatField(required=True)
+    capacity = db.IntField(required=True)
+    date_modified = db.DateTimeField(default=datetime.datetime.utcnow)

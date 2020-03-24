@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, make_response
 from database.db import initialize_db
-from database.models import Driver
+from database.models import Driver, Battery
 
 
 app = Flask(__name__)
@@ -27,6 +27,19 @@ def create_driver():
 def get_drivers():
     drivers = Driver.objects().to_json()
     return make_response(drivers), 200
+
+
+@app.route("/battery", methods=["POST"])
+def create_battery():
+    battery = request.get_json()
+    Battery(**battery).save()
+    return make_response(jsonify(battery)), 201
+
+
+@app.route("/batteries", methods=["GET"])
+def get_batteries():
+    batteries = Battery.objects().to_json()
+    return make_response(batteries), 200
 
 
 if __name__ == '__main__':
