@@ -1,10 +1,10 @@
 import json
-import datetime
 from datetime import date
+
 from flask import Flask, jsonify, request, make_response
+
 from database.db import initialize_db
 from database.models import Driver, Battery, Station, Vehicle, Swap, Odometer
-
 
 app = Flask(__name__)
 
