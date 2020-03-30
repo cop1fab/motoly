@@ -134,6 +134,12 @@
 - Flask
 - MongoDb
 
+## Deployment 
+
+This application is deployed on EC2 AWS instance and is running on the public IP: 
+
+http://18.191.255.204:8080/
+
 ## Contribution guide
 
 ##### Contributing
